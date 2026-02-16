@@ -12,6 +12,10 @@ import com.example.recipecards.ui.theme.RecipeCardsTheme
 import androidx.compose.material3.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.*
+import com.example.recipecards.ui.theme.Pink40
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,9 +23,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipeCardsTheme {
-                    MyCard()
+
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "first"
+                ) {
+                    composable("first") {
+                        FirstScreen(navController)
+                    }
+
+                    composable("second") {
+                        SecondScreen(navController)
+                    }
+                }
             }
         }
+
     }
 }
 
@@ -37,15 +56,64 @@ fun MyCard() {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Material Card Title",
-                style = MaterialTheme.typography.titleLarge
+                text = "Recipe Collection",
+                style = MaterialTheme.typography.titleLarge,
+                color = Pink40
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "This is a Material 3 card using Jetpack Compose."
+                text = "Discover delicious recipes for every meal\n"
+
             )
         }
     }
 }
+
+@Composable
+fun FirstScreen(navController: NavHostController) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("This is Page 1")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = {
+                navController.navigate("second")
+            }) {
+                Text("Go to Page 2")
+            }
+        }
+    }
+}
+
+@Composable
+fun SecondScreen(navController: NavHostController) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("This is Page 2")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = {
+                navController.popBackStack()
+            }) {
+                Text("Back to Page 1")
+            }
+        }
+    }
+}
+
