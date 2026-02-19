@@ -61,4 +61,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-perf-ktx")
+
 }
